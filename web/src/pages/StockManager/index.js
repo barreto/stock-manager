@@ -14,10 +14,10 @@ const StockManager = () => {
   const unselected = -1;
   const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
   const stockManagerOptions = [
-    { text: "Produtos", iconName: "FiPackage" },
-    { text: "Marcas", iconName: "FiTag" },
-    { text: "Categorias", iconName: "FiBookmark" },
-    { text: "Fornecedores", iconName: "FiTruck" },
+    { text: "Produtos", iconName: "FiPackage", path: routesPath.Home },
+    { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
+    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Home },
+    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Home },
   ];
   const [selectedRowIndex, setSelectedRowIndex] = useState(unselected);
 
@@ -25,19 +25,21 @@ const StockManager = () => {
     return selectedRowIndex === key ? "active" : "";
   }
 
-  function getLabelButton(text, iconName, direction = "column") {
+  function getLabelButton(text, iconName, path, direction = "column") {
     return (
-      <Button>
-        <FlexContainer
-          border="none"
-          minWidht="100%"
-          backgroundColor="transparent"
-          direction={direction}
-        >
-          {feather[iconName](defaultButtonsConfig)}
-          <p>{text}</p>
-        </FlexContainer>
-      </Button>
+      <Link to={path}>
+        <Button>
+          <FlexContainer
+            border="none"
+            minWidht="100%"
+            backgroundColor="transparent"
+            direction={direction}
+          >
+            {feather[iconName](defaultButtonsConfig)}
+            <p>{text}</p>
+          </FlexContainer>
+        </Button>
+      </Link>
     );
   }
 
@@ -45,8 +47,8 @@ const StockManager = () => {
     <HeadingContainer heading="Stock Manager" centerHeading>
       <h3>Escolha o que deseja gerenciar</h3>
       <FlexContainer>
-        {stockManagerOptions.map(({ text, iconName }) =>
-          getLabelButton(text, iconName)
+        {stockManagerOptions.map(({ text, iconName, path }) =>
+          getLabelButton(text, iconName, path)
         )}
       </FlexContainer>
 
