@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import routesPath from "../../contants/routesPath";
+import routesPath from "../../constants/routesPath";
 import HeadingContainer from "../../components/HeadingContainer";
 
 const Home = () => {

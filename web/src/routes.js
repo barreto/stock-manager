@@ -3,7 +3,7 @@ import { Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import StockManager from "./pages/StockManager";
 import PalletColors from "./pages/PalletColors";
-import routesPath from "./contants/routesPath";
+import routesPath from "./constants/routesPath";
 
 const Routes = () => {
   return (

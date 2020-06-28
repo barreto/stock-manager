@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import routesPath from "../../contants/routesPath";
-import colorPallet from "../../contants/colorPallet";
+import routesPath from "../../constants/routesPath";
+import colorPallet from "../../constants/colorPallet";
 import HeadingContainer from "../../components/HeadingContainer";
 import Button from "../../components/Button";
 import FlexContainer from "../../components/FlexContainer";

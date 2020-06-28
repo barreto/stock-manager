@@ -1,6 +1,6 @@
 import React from "react";
 import CustomHeading, { CustomContainer } from "./style";
-import colorPallet from "../../contants/colorPallet";
+import colorPallet from "../../constants/colorPallet";
 
 const Container = ({
   heading,
