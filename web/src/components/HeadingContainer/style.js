@@ -14,7 +14,7 @@ const CustomHeading = styled.h1`
   color: #fff;
   letter-spacing: 4px;
   min-width: ${(props) => props.minWidht || defaultMinWidth};
-  max-width: ${(props) => props.maxWidht || defaultMaxWidth};
+  max-width: ${(props) => props.maxWidth || defaultMaxWidth};
   padding: ${(props) => props.padding || defaultPadding};
   font-size: ${(props) => props.fontSize || defaultHeadingFontSize};
 `;
@@ -23,7 +23,7 @@ export default CustomHeading;
 export const CustomContainer = styled.div`
   text-align: ${(props) => (props.centerHeading ? "center" : defaultTextAlign)};
   min-width: ${(props) => props.minWidht || defaultMinWidth};
-  max-width: ${(props) => props.maxWidht || defaultMaxWidth};
+  max-width: ${(props) => props.maxWidth || defaultMaxWidth};
   border: ${(props) => props.border || defaultBorder};
   border-radius: ${(props) => props.borderRadius || defaultBorderRadius};
   padding: ${(props) => props.padding || defaultPadding};
