@@ -4,4 +4,5 @@ export default {
   PalletColors: "/pallet-colors",
   Brands: "/brands",
   Categories: "/categories",
+  Providers: "/providers",
 };
