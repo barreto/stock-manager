@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import routesPath from "../../contants/routesPath";
+import routesPath from "../../constants/routesPath";
 import HeadingContainer from "../../components/HeadingContainer";
-import colorPallet from "../../contants/colorPallet";
+import colorPallet from "../../constants/colorPallet";
 
 const PalletColors = () => {
   return (

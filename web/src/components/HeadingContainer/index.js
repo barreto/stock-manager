@@ -1,15 +1,21 @@
 import React from "react";
 import CustomHeading, { CustomContainer } from "./style";
-import colorPallet from "../../contants/colorPallet";
+import colorPallet from "../../constants/colorPallet";
 
-const Container = ({
+const HeadingContainer = ({
   heading,
   centerHeading,
+  maxWidth,
   margin = "8vh auto 0",
   children,
 }) => {
   return (
-    <CustomContainer padding="none" borderRadius="10px" margin={margin}>
+    <CustomContainer
+      padding="none"
+      borderRadius="10px"
+      margin={margin}
+      maxWidth={maxWidth}
+    >
       {heading && (
         <CustomContainer
           padding="none"
@@ -29,4 +35,4 @@ const Container = ({
   );
 };
 
-export default Container;
+export default HeadingContainer;
