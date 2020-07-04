@@ -20,6 +20,7 @@ public class BrandController {
     @Autowired
     private BrandRepository brandRepository;
 
+    @CrossOrigin
     @GetMapping
     public List<BrandResponseDTO> index(){
         var brand = brandRepository.findAll();
@@ -30,6 +31,7 @@ public class BrandController {
                 .collect(Collectors.toList());
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<BrandResponseDTO> show(@PathVariable("id") Long id) {
         var brand = brandRepository.findById(id);
@@ -40,8 +42,9 @@ public class BrandController {
         return ResponseEntity.ok(BrandResponseDTO.parse(brand.get()));
     }
 
-    @Transactional
+    @CrossOrigin
     @PostMapping
+    @Transactional
     public ResponseEntity<BrandResponseDTO> store(@RequestBody @Valid BrandRequestDTO brandToInsert, UriComponentsBuilder uriComponentsBuilder) {
         var brand = new Brand();
 
@@ -57,6 +60,7 @@ public class BrandController {
         return ResponseEntity.created(uri).body(BrandResponseDTO.parse(brand));
     }
 
+    @CrossOrigin
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<BrandResponseDTO> update(@PathVariable Long id, @RequestBody @Valid BrandRequestDTO brandToUpdate) {
@@ -75,6 +79,7 @@ public class BrandController {
         return ResponseEntity.ok(BrandResponseDTO.parse(brand));
     }
 
+    @CrossOrigin
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable Long id) {

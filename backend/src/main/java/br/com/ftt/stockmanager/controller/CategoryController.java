@@ -20,6 +20,7 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @CrossOrigin
     @GetMapping
     public List<CategoryResponseDTO> index(){
         var category = categoryRepository.findAll();
@@ -30,6 +31,7 @@ public class CategoryController {
                 .collect(Collectors.toList());
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> show(@PathVariable("id") Long id) {
         var category = categoryRepository.findById(id);
@@ -40,6 +42,7 @@ public class CategoryController {
         return ResponseEntity.ok(CategoryResponseDTO.parse(category.get()));
     }
 
+    @CrossOrigin
     @Transactional
     @PostMapping
     public ResponseEntity<CategoryResponseDTO> store(@RequestBody @Valid CategoryRequestDTO categoryToInsert, UriComponentsBuilder uriComponentsBuilder) {
@@ -57,6 +60,7 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(CategoryResponseDTO.parse(category));
     }
 
+    @CrossOrigin
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CategoryRequestDTO categoryToUpdate) {
@@ -75,6 +79,7 @@ public class CategoryController {
         return ResponseEntity.ok(CategoryResponseDTO.parse(category));
     }
 
+    @CrossOrigin
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable Long id) {
