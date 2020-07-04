@@ -10,6 +10,7 @@ import { useState } from "react";
 import { formatCNPJ } from "../../helpers/formatter";
 import IBGEApi from "../../services/IBGEApi";
 import longMaxValue from "../../constants/longMaxValue";
+import ProvidersService from "../../services/ProvidersService";
 
 const Providers = () => {
   // eslint-disable-next-line no-unused-vars
@@ -24,12 +25,12 @@ const Providers = () => {
   const [availableCites, setAvailableCities] = useState([]);
 
   const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [CNPj, setCPNJ] = useState("");
-  const [selectedUF, setSelectedUF] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [neighbourhood, setNeighbourhood] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState("Market JP");
+  const [CNPj, setCPNJ] = useState("12.121.212/1212-12");
+  const [selectedUF, setSelectedUF] = useState("sp");
+  const [selectedCity, setSelectedCity] = useState("angatuba");
+  const [neighbourhood, setNeighbourhood] = useState("topzeros");
+  const [address, setAddress] = useState("rua das xpto");
 
   const maskCNPJ = "00.000.000/0000-00";
 
@@ -73,21 +74,46 @@ const Providers = () => {
 
   const handleAddress = (event) => setAddress(event.target.value);
 
-  function handleAdd() {
-    alert("Uuh! Sorry, this action is still under development");
+  function getFormData() {
+    return {
+      name,
+      cnpj: CNPj,
+      address: `${selectedCity}(${selectedUF}), bairro ${neighbourhood} - ${address}`.toLowerCase(),
+    };
+  }
+
+  function setFormData(provider) {
+    setId(provider.id);
+    setName(provider.name);
+    setCPNJ(provider.cnpj);
+    setSelectedUF("sp" || provider.address);
+    setSelectedCity("Barueri" || provider.address);
+    setNeighbourhood("Stand Art" || provider.address);
+    setAddress("Rua Pad Draão" || provider.address);
+  }
+
+  async function handleAdd() {
+    const newProvider = getFormData();
+    try {
+      const response = await ProvidersService.newProvider(newProvider);
+      console.log(">>>>>>>>>> newProvider: ", response);
+    } catch (error) {
+      console.log("Error!", error);
+    }
   }
 
   function handleSearch() {
     const safeDelay = 100;
+    handleClear();
     setDisableIdField(false);
     setTimeout(setFocusOnIdField, safeDelay);
   }
 
   function handleEdit() {
-    handleAdd();
+    alert("Uuh! Sorry, this action is still under development");
   }
   function handleDelete() {
-    handleAdd();
+    alert("Uuh! Sorry, this action is still under development");
   }
 
   function handleClear() {
@@ -107,16 +133,22 @@ const Providers = () => {
     setCPNJ(formatedValue);
   };
 
+  async function findProvider(id) {
+    const response = await ProvidersService.getProvider(id);
+    console.log("response", response);
+  }
+
   const handleIdKeyUp = (event) => {
     const key = event.key;
     const listenedKey = "Enter";
     if (key === listenedKey) {
-      alert("Uuh! Sorry but search action is stil under develoment.");
+      console.log("Id to search: " + id);
+      findProvider(id);
     }
   };
 
   return (
-    <HeadingContainer heading="Categorias" maxWidth="700px">
+    <HeadingContainer heading="Fornecedores" maxWidth="700px">
       <form action="handleFormSubmit">
         <FlexContainer direction="column" alignItems="left">
           <label htmlFor="provider-id">
@@ -189,14 +221,15 @@ const Providers = () => {
             flexGrow={1}
           >
             <label htmlFor="provider-city">Cidade</label>
-            <select id="provider-city" onChange={handleCity}>
+            <select
+              id="provider-city"
+              value={selectedCity}
+              onChange={handleCity}
+            >
               <option value="-1">Selecione</option>
               {availableCites.length &&
                 availableCites.map((city, key) => (
-                  <option
-                    key={key}
-                    value={city.replace(" ", "-").toLocaleLowerCase()}
-                  >
+                  <option key={key} value={city.toLowerCase()}>
                     {city}
                   </option>
                 ))}
@@ -221,7 +254,9 @@ const Providers = () => {
             />
           </FlexContainer>
           <FlexContainer direction="column" alignItems="left" flexGrow={10}>
-            <label htmlFor="provider-address">Cidade</label>
+            <label htmlFor="provider-address">
+              Logradouro (Ex: avenida, rua, travessa...)
+            </label>
             <input
               id="provider-address"
               type="text"
