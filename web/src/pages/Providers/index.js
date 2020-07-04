@@ -121,15 +121,35 @@ const Providers = () => {
       return;
     }
     try {
-      await ProvidersService.updatePovider(newProvider);
+      await ProvidersService.updatePovider(id, newProvider);
       alert("Fornecedor atualizado com sucesso!");
     } catch (error) {
       alert("Erro ao atualizar fornecedor. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
   }
-  function handleDelete() {
-    alert("Uuh! Sorry, this action is still under development");
+  async function handleDelete() {
+    const newProvider = getFormData();
+    if (!checkIfIsValidProvider(newProvider)) {
+      alert(
+        "Antes de remover um fornecedor pesquise-o e verifique se realmente deseja o excluir."
+      );
+      return;
+    }
+    const deleteConfirmation = window.confirm(
+      `Você realmente deseja deletar os dados referentes ao fornecedor: ${name}`
+    );
+
+    if (deleteConfirmation) {
+      try {
+        await ProvidersService.deleteProvider(id);
+        alert("Fornecedor removido com sucesso!");
+        handleClear();
+      } catch (error) {
+        alert("Erro ao remover fornecedor. Tente novamente mais tarde!");
+        console.log("Error!", error);
+      }
+    }
   }
 
   function handleClear() {
@@ -205,9 +225,9 @@ const Providers = () => {
     const key = event.key;
     const listenedKey = "Enter";
     if (key === listenedKey) {
-      console.log("Id to search: " + id);
       findProvider(id);
       setDisableIdField(true);
+      setFocusOnNameField();
     }
   };
 

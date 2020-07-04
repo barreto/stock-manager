@@ -36,7 +36,6 @@ const ProvidersService = {
   updatePovider(id, provider) {
     return api.put(`/provider/${id}`, provider).then((response) => {
       if (response.data) {
-        debugger;
         return response.data;
       }
       return {};
