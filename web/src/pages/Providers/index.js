@@ -13,11 +13,12 @@ import longMaxValue from "../../constants/longMaxValue";
 import ProvidersService from "../../services/ProvidersService";
 
 const Providers = () => {
-  // eslint-disable-next-line no-unused-vars
-  const handleFormSubmit = () => {
-    alert("Yeeeah!");
-  };
+  const maskCNPJ = "00.000.000/0000-00";
+  const notAllDataErrorMessage =
+    "Certifique-se de ter preenchido corretamente todos os campos do formulário.";
+
   const inputIdField = useRef(null);
+  const inputNameField = useRef(null);
   const inputCNPJ = useRef(null);
   const [disableIdField, setDisableIdField] = useState(true);
 
@@ -25,14 +26,12 @@ const Providers = () => {
   const [availableCites, setAvailableCities] = useState([]);
 
   const [id, setId] = useState("");
-  const [name, setName] = useState("Market JP");
-  const [CNPj, setCPNJ] = useState("12.121.212/1212-12");
-  const [selectedUF, setSelectedUF] = useState("sp");
-  const [selectedCity, setSelectedCity] = useState("angatuba");
-  const [neighbourhood, setNeighbourhood] = useState("topzeros");
-  const [address, setAddress] = useState("rua das xpto");
-
-  const maskCNPJ = "00.000.000/0000-00";
+  const [name, setName] = useState("");
+  const [CNPj, setCPNJ] = useState("");
+  const [selectedUF, setSelectedUF] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [neighbourhood, setNeighbourhood] = useState("");
+  const [address, setAddress] = useState("");
 
   const options = [
     { text: "Incluir", iconName: "FiPlusCircle", action: handleAdd },
@@ -43,6 +42,7 @@ const Providers = () => {
   ];
 
   const setFocusOnIdField = () => inputIdField.current.focus();
+  const setFocusOnNameField = () => inputNameField.current.focus();
 
   const getAvailableUFs = async () => {
     setAvailableUFs(await IBGEApi.getUFs());
@@ -83,7 +83,6 @@ const Providers = () => {
   }
 
   function setFormData(provider) {
-    setId(provider.id);
     setName(provider.name);
     setCPNJ(provider.cnpj);
     setSelectedUF("sp" || provider.address);
@@ -94,10 +93,16 @@ const Providers = () => {
 
   async function handleAdd() {
     const newProvider = getFormData();
+    if (!checkIfIsValidProvider(newProvider)) {
+      alert(notAllDataErrorMessage);
+      return;
+    }
     try {
-      const response = await ProvidersService.newProvider(newProvider);
-      console.log(">>>>>>>>>> newProvider: ", response);
+      await ProvidersService.newProvider(newProvider);
+      alert("Fornecedor cadastrado com sucesso!");
+      handleClear();
     } catch (error) {
+      alert("Erro ao cadastrar fornecedor. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
   }
@@ -109,8 +114,19 @@ const Providers = () => {
     setTimeout(setFocusOnIdField, safeDelay);
   }
 
-  function handleEdit() {
-    alert("Uuh! Sorry, this action is still under development");
+  async function handleEdit() {
+    const newProvider = getFormData();
+    if (!checkIfIsValidProvider(newProvider)) {
+      alert(notAllDataErrorMessage);
+      return;
+    }
+    try {
+      await ProvidersService.updatePovider(newProvider);
+      alert("Fornecedor atualizado com sucesso!");
+    } catch (error) {
+      alert("Erro ao atualizar fornecedor. Tente novamente mais tarde!");
+      console.log("Error!", error);
+    }
   }
   function handleDelete() {
     alert("Uuh! Sorry, this action is still under development");
@@ -125,6 +141,7 @@ const Providers = () => {
     setAvailableCities([]);
     setNeighbourhood("");
     setAddress("");
+    setFocusOnNameField();
   }
 
   const handleCNPJ = (event) => {
@@ -133,9 +150,55 @@ const Providers = () => {
     setCPNJ(formatedValue);
   };
 
+  const checkIfIsValidProvider = (provider) => {
+    return (
+      !!provider && !!provider.name && !!provider.cnpj && !!provider.address
+    );
+  };
+
+  function separateAddressInfo(address) {
+    //  exemple:  "são matheus(mg), bairro urbano - rua das xpto";
+    return {
+      uf: address.substr(address.indexOf("(") + 1, 2),
+      city: address.substr(0, address.indexOf("(")),
+      neighbourhood: address.substring(
+        address.indexOf("bairro"),
+        address.indexOf("-") - 1
+      ),
+      address: address
+        .substring(address.indexOf("-") + 1, address.length)
+        .trim(),
+    };
+  }
+
+  const createMappedProvider = (providerResponse) => {
+    const { uf, city, neighbourhood, address } = separateAddressInfo(
+      providerResponse.address
+    );
+
+    const mappedProvider = {
+      name: providerResponse.name,
+      cnpj: providerResponse.cnpj,
+      uf,
+      city,
+      neighbourhood,
+      address,
+    };
+
+    return mappedProvider;
+  };
+
   async function findProvider(id) {
     const response = await ProvidersService.getProvider(id);
-    console.log("response", response);
+    const isValidProvider = checkIfIsValidProvider(response);
+    if (!isValidProvider) {
+      alert("Esse fornecedor não foi encontrado.");
+      handleClear();
+      return;
+    }
+
+    const mappedProvider = createMappedProvider(response);
+    setFormData(mappedProvider);
   }
 
   const handleIdKeyUp = (event) => {
@@ -144,12 +207,13 @@ const Providers = () => {
     if (key === listenedKey) {
       console.log("Id to search: " + id);
       findProvider(id);
+      setDisableIdField(true);
     }
   };
 
   return (
     <HeadingContainer heading="Fornecedores" maxWidth="700px">
-      <form action="handleFormSubmit">
+      <form>
         <FlexContainer direction="column" alignItems="left">
           <label htmlFor="provider-id">
             Id{" "}
@@ -175,6 +239,7 @@ const Providers = () => {
           <label htmlFor="provider-name">Nome</label>
           <input
             id="provider-name"
+            ref={inputNameField}
             type="text"
             maxLength={100}
             value={name}
