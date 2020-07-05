@@ -17,6 +17,7 @@ label {
 input {
   background-color: #d8e2f1;
   border: none;
+  width: 100%;
   border-radius: 10px;
   min-height: 48px;
   margin: 0px 0 16px;

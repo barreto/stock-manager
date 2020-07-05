@@ -9,7 +9,7 @@ import IconButton from "../../components/IconButton/icon";
 import { useState } from "react";
 import longMaxValue from "../../constants/longMaxValue";
 import BrandsService from "../../services/BrandsService";
-import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMEssage";
+import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 const Brands = () => {
   const inputIdField = useRef(null);

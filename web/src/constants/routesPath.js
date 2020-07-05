@@ -5,4 +5,5 @@ export default {
   Brands: "/brands",
   Categories: "/categories",
   Providers: "/providers",
+  Products: "/products",
 };
