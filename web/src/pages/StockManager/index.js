@@ -14,7 +14,7 @@ const StockManager = () => {
   const unselected = -1;
   const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
   const stockManagerOptions = [
-    { text: "Produtos", iconName: "FiPackage", path: routesPath.Home },
+    { text: "Produtos", iconName: "FiPackage", path: routesPath.Products },
     { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
     { text: "Categorias", iconName: "FiBookmark", path: routesPath.Categories },
     { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Providers },
@@ -31,7 +31,7 @@ const StockManager = () => {
         <Button>
           <FlexContainer
             border="none"
-            minWidht="100%"
+            minWidth="100%"
             backgroundColor="transparent"
             direction={direction}
           >
@@ -84,7 +84,7 @@ const StockManager = () => {
       </div>
 
       <FlexContainer justifyContent="center">
-        <Button height="48px" widht="50%" padding="none">
+        <Button height="48px" width="50%" padding="none">
           <FlexContainer justifyContent="center">
             <p style={{ marginRight: 8 }}>Gerenciar produto selecionado</p>
             <FiEdit size={16} color={colorPallet.blue.high} />
