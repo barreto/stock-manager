@@ -286,8 +286,8 @@ const Providers = () => {
           <FlexContainer
             direction="column"
             alignItems="left"
-            minWidht="auto"
-            maxWidht="128px"
+            minWidth="auto"
+            maxWidth="128px"
             padding="0 16px 0 0"
           >
             <label htmlFor="provider-uf">UF</label>
@@ -304,8 +304,8 @@ const Providers = () => {
           <FlexContainer
             direction="column"
             alignItems="left"
-            minWidht="auto"
-            maxWidht="auto"
+            minWidth="auto"
+            maxWidth="auto"
             flexGrow={1}
           >
             <label htmlFor="provider-city">Cidade</label>
