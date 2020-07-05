@@ -10,7 +10,7 @@ import { useState } from "react";
 import longMaxValue from "../../constants/longMaxValue";
 import CategoriesService from "../../services/CategoriesService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
-import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMEssage";
+import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 const Categories = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);

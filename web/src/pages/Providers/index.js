@@ -12,7 +12,7 @@ import IBGEApi from "../../services/IBGEApi";
 import longMaxValue from "../../constants/longMaxValue";
 import ProvidersService from "../../services/ProvidersService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
-import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMEssage";
+import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 
 const Providers = () => {
   const maskCNPJ = "00.000.000/0000-00";
