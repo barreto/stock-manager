@@ -11,11 +11,11 @@ import { formatCNPJ, formatNumeric } from "../../helpers/formatter";
 import IBGEApi from "../../services/IBGEApi";
 import longMaxValue from "../../constants/longMaxValue";
 import ProvidersService from "../../services/ProvidersService";
+import ExtraIdInfo from "../../components/ExtraIdInfo";
+import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMEssage";
 
 const Providers = () => {
   const maskCNPJ = "00.000.000/0000-00";
-  const notAllDataErrorMessage =
-    "Certifique-se de ter preenchido corretamente todos os campos do formulário.";
 
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
@@ -238,24 +238,12 @@ const Providers = () => {
     setDisableIdField(true);
   };
 
-  const getExtraIdInfo = (isDisabled) => {
-    if (isDisabled) {
-      return <i>(O valor de ID só será usado para realizar buscas)</i>;
-    } else {
-      return (
-        <i>
-          (Para pesquisar pressione <b>Enter</b>)
-        </i>
-      );
-    }
-  };
-
   return (
     <HeadingContainer heading="Fornecedores" maxWidth="700px">
       <form>
         <FlexContainer direction="column" alignItems="left">
           <label htmlFor="provider-id">
-            Id {getExtraIdInfo(disableIdField)}
+            <ExtraIdInfo isDisabled={disableIdField} />
           </label>
           <input
             ref={inputIdField}
