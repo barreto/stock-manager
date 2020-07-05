@@ -25,9 +25,9 @@ const StockManager = () => {
     return selectedRowIndex === key ? "active" : "";
   }
 
-  function getLabelButton(text, iconName, path, direction = "column") {
+  function getLabelButton(text, iconName, path, key, direction = "column") {
     return (
-      <Link to={path}>
+      <Link to={path} key={key}>
         <Button>
           <FlexContainer
             border="none"
@@ -47,8 +47,8 @@ const StockManager = () => {
     <HeadingContainer heading="Stock Manager" centerHeading>
       <h3>Escolha o que deseja gerenciar</h3>
       <FlexContainer>
-        {stockManagerOptions.map(({ text, iconName, path }) =>
-          getLabelButton(text, iconName, path)
+        {stockManagerOptions.map(({ text, iconName, path }, key) =>
+          getLabelButton(text, iconName, path, key)
         )}
       </FlexContainer>
 
@@ -67,7 +67,7 @@ const StockManager = () => {
           <tbody>
             {[1, 2, 3, 4, 5].map((key) => (
               <tr
-                key={key}
+                key={key + new Date().getTime()}
                 onClick={() => setSelectedRowIndex(key)}
                 className={getRowClass(key)}
               >
