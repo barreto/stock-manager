@@ -6,7 +6,7 @@ import Button from "../Button";
 
 const IconButton = ({
   height,
-  widht,
+  width,
   padding,
   onClick,
   size = 48,
@@ -18,11 +18,12 @@ const IconButton = ({
   const defaultButtonsConfig = { size, color };
 
   return (
-    <Button widht={widht} height={height} padding={padding} onClick={onClick}>
+    <Button width={width} height={height} padding={padding} onClick={onClick}>
       <FlexContainer
         border="none"
-        minWidht="100%"
         backgroundColor="transparent"
+        minWidth="auto"
+        maxWidth="auto"
         direction={direction}
       >
         {feather[iconName](defaultButtonsConfig)}

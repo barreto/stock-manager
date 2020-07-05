@@ -360,7 +360,7 @@ const Providers = () => {
         {options.map(({ text, iconName, action }, key) => (
           <IconButton
             key={key}
-            widht="19%"
+            width="19%"
             iconName={iconName}
             onClick={action}
           >

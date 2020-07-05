@@ -5,8 +5,8 @@ const FlexContainer = ({
   alignItems,
   justifyContent,
   direction,
-  minWidht,
-  maxWidht,
+  minWidth,
+  maxWidth,
   borderRadius,
   flexGrow,
   border = "none",
@@ -20,8 +20,8 @@ const FlexContainer = ({
       alignItems={alignItems}
       justifyContent={justifyContent}
       direction={direction}
-      minWidht={minWidht}
-      maxWidht={maxWidht}
+      minWidth={minWidth}
+      maxWidth={maxWidth}
       border={border}
       borderRadius={borderRadius}
       padding={padding}

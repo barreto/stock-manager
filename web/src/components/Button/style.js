@@ -15,7 +15,7 @@ const CustomButton = styled.button`
   border-radius: ${(props) => props.borderRadius || defaultBorderRadius};
   border: ${(props) => props.border || defaultBorder};
   padding: ${(props) => props.padding || defaultPadding};
-  width: ${(props) => props.widht || defaultWidth};
+  width: ${(props) => props.width || defaultWidth};
   height: ${(props) => props.height || defaultHeight};
 
   &:hover {
