@@ -32,9 +32,9 @@ const CustomFlexContainer = styled.div`
   margin: ${(props) => props.margin || defaultMargin};
   background: ${(props) => props.backgroundColor || defaultBackground};
   min-width: ${(props) =>
-    defineWidth(props.flexGrow, props.minWidht, defaultMinWidth)};
+    defineWidth(props.flexGrow, props.minWidth, defaultMinWidth)};
   max-width: ${(props) =>
-    defineWidth(props.flexGrow, props.maxWidht, defaultMaxWidth)};
+    defineWidth(props.flexGrow, props.maxWidth, defaultMaxWidth)};
 `;
 
 export default CustomFlexContainer;

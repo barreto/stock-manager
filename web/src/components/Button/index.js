@@ -1,12 +1,12 @@
 import React from "react";
 import CustomButton from "./style";
 
-const Button = ({ height, widht, padding, onClick, children }) => {
+const Button = ({ height, width, padding, onClick, children }) => {
   return (
     <CustomButton
       padding={padding}
       height={height}
-      widht={widht}
+      width={width}
       onClick={onClick}
     >
       {children}
