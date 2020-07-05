@@ -11,3 +11,7 @@ export function formatCNPJ(value) {
 
   return value;
 }
+
+export function formatNumeric(value) {
+  return value.replace(/\D/g, "");
+}

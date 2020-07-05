@@ -7,7 +7,7 @@ import colorPallet from "../../constants/colorPallet";
 import { FiArrowLeft } from "react-icons/fi";
 import IconButton from "../../components/IconButton/icon";
 import { useState } from "react";
-import { formatCNPJ } from "../../helpers/formatter";
+import { formatCNPJ, formatNumeric } from "../../helpers/formatter";
 import IBGEApi from "../../services/IBGEApi";
 import longMaxValue from "../../constants/longMaxValue";
 import ProvidersService from "../../services/ProvidersService";
@@ -62,7 +62,11 @@ const Providers = () => {
     }
   }, [selectedUF]);
 
-  const handleId = (event) => setId(event.target.value);
+  const handleId = (event) => {
+    const value = event.target.value;
+    const formatedValue = formatNumeric(value);
+    setId(formatedValue);
+  };
 
   const handleName = (event) => setName(event.target.value);
 
@@ -85,10 +89,10 @@ const Providers = () => {
   function setFormData(provider) {
     setName(provider.name);
     setCPNJ(provider.cnpj);
-    setSelectedUF("sp" || provider.address);
-    setSelectedCity("Barueri" || provider.address);
-    setNeighbourhood("Stand Art" || provider.address);
-    setAddress("Rua Pad Draão" || provider.address);
+    setSelectedUF(provider.uf || "");
+    setSelectedCity(provider.city || "");
+    setNeighbourhood(provider.neighbourhood || "");
+    setAddress(provider.address || "");
   }
 
   async function handleAdd() {
@@ -181,10 +185,9 @@ const Providers = () => {
     return {
       uf: address.substr(address.indexOf("(") + 1, 2),
       city: address.substr(0, address.indexOf("(")),
-      neighbourhood: address.substring(
-        address.indexOf("bairro"),
-        address.indexOf("-") - 1
-      ),
+      neighbourhood: address
+        .substring(address.indexOf("bairro") + 6, address.indexOf("-") - 1)
+        .trim(),
       address: address
         .substring(address.indexOf("-") + 1, address.length)
         .trim(),
@@ -231,26 +234,38 @@ const Providers = () => {
     }
   };
 
+  const handleIdOnBlur = () => {
+    setDisableIdField(true);
+  };
+
+  const getExtraIdInfo = (isDisabled) => {
+    if (isDisabled) {
+      return <i>(O valor de ID só será usado para realizar buscas)</i>;
+    } else {
+      return (
+        <i>
+          (Para pesquisar pressione <b>Enter</b>)
+        </i>
+      );
+    }
+  };
+
   return (
     <HeadingContainer heading="Fornecedores" maxWidth="700px">
       <form>
         <FlexContainer direction="column" alignItems="left">
           <label htmlFor="provider-id">
-            Id{" "}
-            {!disableIdField && (
-              <i>
-                (Para pesquisar pressione <b>Enter</b>)
-              </i>
-            )}
+            Id {getExtraIdInfo(disableIdField)}
           </label>
           <input
             ref={inputIdField}
             id="provider-id"
             type="number"
-            min={0}
+            min={1}
             max={longMaxValue}
             onKeyUp={handleIdKeyUp}
             value={id}
+            onBlur={handleIdOnBlur}
             onChange={handleId}
             disabled={disableIdField}
           />
