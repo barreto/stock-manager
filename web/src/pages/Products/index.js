@@ -42,13 +42,16 @@ const Products = () => {
   const handleName = (event) => setName(event.target.value);
   const handleAmount = (event) => setAmount(event.target.value);
   const handlePrice = (event) => {};
-  const handlePriceKeyUp = (event, key) => {
+  const handlePriceKeyDown = (event) => {
     const numericKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const allowedKeys = [...numericKeys, "Backspace"];
     const pressedKey = event.key;
+    const safeDiff = 1000;
+    const alreadyOnMaxLength =
+      Number(removeComma(price) - safeDiff) >= longMaxValue;
 
     if (allowedKeys.includes(pressedKey)) {
-      if (numericKeys.includes(pressedKey)) {
+      if (!alreadyOnMaxLength && numericKeys.includes(pressedKey)) {
         setNumberAtEndOfPrice(pressedKey);
         return;
       }
@@ -407,7 +410,7 @@ const Products = () => {
               borderRadius="10px 0 0 10px"
               margin="0 -8px 16px 0"
               width="auto"
-              minWidht="auto"
+              minWidth="auto"
               backgroundColor={colorPallet.blue.lighter}
             >
               R$
@@ -417,9 +420,10 @@ const Products = () => {
                 id="product-price"
                 type="text"
                 min={1}
+                maxLength="10"
                 value={price}
                 onChange={handlePrice}
-                onKeyUp={handlePriceKeyUp}
+                onKeyDown={handlePriceKeyDown}
               />
             </FlexContainer>
           </FlexContainer>
