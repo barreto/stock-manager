@@ -12,10 +12,6 @@ import CategoriesService from "../../services/CategoriesService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMEssage";
 const Categories = () => {
-  // eslint-disable-next-line no-unused-vars
-  const handleFormSubmit = () => {
-    alert("Yeeeah!");
-  };
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
 
@@ -153,7 +149,7 @@ const Categories = () => {
 
   return (
     <HeadingContainer heading="Categorias" maxWidth="500px">
-      <form action="handleFormSubmit">
+      <form>
         <FlexContainer direction="column" alignItems="left">
           <label htmlFor="category-id">
             <ExtraIdInfo isDisabled={disableIdField} />
@@ -185,8 +181,8 @@ const Categories = () => {
           <label htmlFor="category-description">Descrição</label>
           <textarea
             id="category-description"
-            value={description}
             type="text"
+            value={description}
             onChange={handleDescription}
           />
         </FlexContainer>
