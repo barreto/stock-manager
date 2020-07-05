@@ -9,19 +9,32 @@ const defaultMargin = "0px";
 const defaultAlignItems = "center";
 const defaultJustifyContent = "space-between";
 const defaultDirection = "row";
+const defaultFlexGrow = "none";
+const defaultBackground = "#fff";
+
+function defineWidth(flexGrow, received, defaultSize) {
+  const hasFlexGrow = Boolean(flexGrow);
+  if (hasFlexGrow) {
+    return "auto";
+  }
+  return received || defaultSize;
+}
 
 const CustomFlexContainer = styled.div`
   display: flex;
+  flex-grow: ${(props) => props.flexGrow || defaultFlexGrow};
   align-items: ${(props) => props.alignItems || defaultAlignItems};
   justify-content: ${(props) => props.justifyContent || defaultJustifyContent};
   flex-direction: ${(props) => props.direction || defaultDirection};
-  min-width: ${(props) => props.minWidht || defaultMinWidth};
-  max-width: ${(props) => props.maxWidht || defaultMaxWidth};
   border: ${(props) => props.border || defaultBorder};
   border-radius: ${(props) => props.borderRadius || defaultBorderRadius};
   padding: ${(props) => props.padding || defaultPadding};
   margin: ${(props) => props.margin || defaultMargin};
-  background: ${(props) => props.backgroundColor || "#fff"};
+  background: ${(props) => props.backgroundColor || defaultBackground};
+  min-width: ${(props) =>
+    defineWidth(props.flexGrow, props.minWidht, defaultMinWidth)};
+  max-width: ${(props) =>
+    defineWidth(props.flexGrow, props.maxWidht, defaultMaxWidth)};
 `;
 
 export default CustomFlexContainer;

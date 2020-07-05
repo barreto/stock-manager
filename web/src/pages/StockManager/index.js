@@ -16,8 +16,8 @@ const StockManager = () => {
   const stockManagerOptions = [
     { text: "Produtos", iconName: "FiPackage", path: routesPath.Home },
     { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
-    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Home },
-    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Home },
+    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Categories },
+    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Providers },
   ];
   const [selectedRowIndex, setSelectedRowIndex] = useState(unselected);
 

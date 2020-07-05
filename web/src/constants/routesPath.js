@@ -3,4 +3,6 @@ export default {
   StockManager: "/stock-manager",
   PalletColors: "/pallet-colors",
   Brands: "/brands",
+  Categories: "/categories",
+  Providers: "/providers",
 };
