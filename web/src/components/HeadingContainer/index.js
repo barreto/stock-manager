@@ -5,6 +5,7 @@ import colorPallet from "../../constants/colorPallet";
 const HeadingContainer = ({
   heading,
   centerHeading,
+  minWidth,
   maxWidth,
   margin = "8vh auto 0",
   children,
@@ -14,6 +15,7 @@ const HeadingContainer = ({
       padding="none"
       borderRadius="10px"
       margin={margin}
+      minWidth={minWidth}
       maxWidth={maxWidth}
     >
       {heading && (
@@ -21,6 +23,8 @@ const HeadingContainer = ({
           padding="none"
           margin="none"
           border="none"
+          minWidth={minWidth}
+          maxWidth={maxWidth}
           borderRadius="10px 10px 0px 0px"
           centerHeading={centerHeading}
           backgroundColor={colorPallet.blue.high}
@@ -28,7 +32,12 @@ const HeadingContainer = ({
           <CustomHeading>{heading}</CustomHeading>
         </CustomContainer>
       )}
-      <CustomContainer borderRadius="0px 0px 10px 10px" border="none">
+      <CustomContainer
+        border="none"
+        minWidth={minWidth}
+        maxWidth={maxWidth}
+        borderRadius="0px 0px 10px 10px"
+      >
         {children}
       </CustomContainer>
     </CustomContainer>
