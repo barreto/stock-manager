@@ -15,3 +15,10 @@ export function formatCNPJ(value) {
 export function formatNumeric(value) {
   return value.replace(/\D/g, "");
 }
+
+export function formatMoneyToBRL(value) {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}

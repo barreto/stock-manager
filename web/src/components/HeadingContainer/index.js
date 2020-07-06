@@ -7,7 +7,7 @@ const HeadingContainer = ({
   centerHeading,
   minWidth,
   maxWidth,
-  margin = "8vh auto 0",
+  margin = "4vh auto 0",
   children,
 }) => {
   return (

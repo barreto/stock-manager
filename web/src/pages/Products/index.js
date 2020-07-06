@@ -15,8 +15,9 @@ import ProductsService from "../../services/ProductsService";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notValidIdMessage } from "../../constants/notValidIdMessage";
+import StockService from "../../services/StockService";
 
-const Products = () => {
+const Products = ({ location }) => {
   const minPriceValue = "0,00";
   const unselected = -1;
   const inputIdField = useRef(null);
@@ -122,6 +123,7 @@ const Products = () => {
   const setFormData = (product) => {
     setName(product.name);
     setDescription(product.description);
+    setAmount(product.amount);
     setPrice(parseFloat(product.price).toFixed(2).toString().replace(".", ","));
     setSelectedBrandId(product.brandId);
     setSelectedCategoryId(product.categoryId);
@@ -136,7 +138,7 @@ const Products = () => {
     }
     try {
       await ProductsService.newProduct(newProduct);
-      alert("Produto cadastrada com sucesso!");
+      alert("Produto cadastrado com sucesso!");
       handleClear();
     } catch (error) {
       alert("Erro ao cadastrar produto. Tente novamente mais tarde!");
@@ -160,10 +162,10 @@ const Products = () => {
     }
     try {
       await ProductsService.updateProduct(id, productToEdit);
+      await StockService.updateProductAmount(id, amount);
       alert("Produto atualizado com sucesso!");
     } catch (error) {
-      alert("Erro ao atualizar produto. Tente novamente mais tarde!");
-      console.log("Error!", error);
+      console.log("Error at handleEdit: ", error);
     }
   }
   async function handleDelete() {
@@ -218,6 +220,7 @@ const Products = () => {
       !!product.name &&
       !!product.description &&
       product.price > 0 &&
+      product.amount >= 0 &&
       product.brandId !== unselected &&
       product.categoryId !== unselected &&
       product.providerId !== unselected
@@ -232,7 +235,7 @@ const Products = () => {
       return;
     }
 
-    const response = await ProductsService.getProduct(id);
+    const response = await StockService.getProductFromStock(id);
     const isValidProduct = checkIfIsValidProduct(response);
     if (!isValidProduct) {
       alert("Esse produto não foi encontrada.");
@@ -284,6 +287,16 @@ const Products = () => {
     getAvailableBrands();
     getAvailableProviders();
   }, []);
+
+  useEffect(() => {
+    const hasProductId = location.state && location.state.productId;
+    if (hasProductId) {
+      const { productId } = location.state;
+      setId(productId);
+      findProduct(productId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <HeadingContainer heading="Produtos" minWidth="700px" maxWidth="900px">
@@ -388,9 +401,7 @@ const Products = () => {
             </select>
           </FlexContainer>
           <FlexContainer direction="column" alignItems="left">
-            <label htmlFor="product-amount">
-              Quantidade inicial (Somente para inclusões)
-            </label>
+            <label htmlFor="product-amount">Quantidade</label>
             <input
               id="product-amount"
               type="number"

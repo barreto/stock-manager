@@ -2,15 +2,15 @@
   overflow: auto;
   margin: 16px 0;
   border-radius: 10px;
+  height: 200px;
+  position: relative;
 }
 
 .custom-table table {
   width: 100%;
-  overflow-x: auto;
   border-collapse: collapse;
 }
 
-.custom-table table thead,
 .custom-table table tbody td {
   width: 12.5%;
 }
