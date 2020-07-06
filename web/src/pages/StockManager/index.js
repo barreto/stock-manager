@@ -1,28 +1,43 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import colorPallet from "../../constants/colorPallet";
 import HeadingContainer from "../../components/HeadingContainer";
 import Button from "../../components/Button";
 import FlexContainer from "../../components/FlexContainer";
-import { FiEdit, FiArrowLeft } from "react-icons/fi";
+import { repositoryURL } from "../../constants/repositoryURL";
+import { useEffect } from "react";
+import StockService from "../../services/StockService";
+import { formatMoneyToBRL } from "../../helpers/formatter";
+import { FiEdit, FiArrowLeft, FiGithub } from "react-icons/fi";
 import * as feather from "react-icons/fi";
-
 import "./style.css";
 
 const StockManager = () => {
   const unselected = -1;
   const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
+
+  const history = useHistory();
+
+  const [selectedProductId, setSelectedProductId] = useState(unselected);
+  const [stockedProducts, setStockedProducts] = useState([]);
+
+  const handledoubleClick = () =>
+    redirecToProductsSectionWithPredefinedProductId();
+
+  const redirecToProductsSectionWithPredefinedProductId = () => {
+    history.push(routesPath.Products, { productId: selectedProductId });
+  };
+
   const stockManagerOptions = [
     { text: "Produtos", iconName: "FiPackage", path: routesPath.Products },
     { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
     { text: "Categorias", iconName: "FiBookmark", path: routesPath.Categories },
     { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Providers },
   ];
-  const [selectedRowIndex, setSelectedRowIndex] = useState(unselected);
 
-  function getRowClass(key) {
-    return selectedRowIndex === key ? "active" : "";
+  function getRowClass(id) {
+    return selectedProductId === id ? "active" : "";
   }
 
   function getLabelButton(text, iconName, path, key, direction = "column") {
@@ -42,6 +57,42 @@ const StockManager = () => {
       </Link>
     );
   }
+
+  const getStockedProducts = async () => {
+    try {
+      setStockedProducts(await StockService.getStock());
+    } catch (error) {
+      console.log("Error at getStockedProducts: ", error);
+    }
+  };
+
+  function getStockRows() {
+    if (!stockedProducts.length) return null;
+
+    return stockedProducts.map(({ id, product, amount }) => {
+      const { name, category, brand, provider, price } = product;
+
+      return (
+        <tr
+          key={id}
+          onClick={() => setSelectedProductId(id)}
+          onDoubleClick={handledoubleClick}
+          className={getRowClass(id)}
+        >
+          <td>{name}</td>
+          <td>{formatMoneyToBRL(price)}</td>
+          <td>{brand.name}</td>
+          <td>{category.name}</td>
+          <td>{provider.name}</td>
+          <td>{amount}</td>
+        </tr>
+      );
+    });
+  }
+
+  useEffect(() => {
+    getStockedProducts();
+  }, []);
 
   return (
     <HeadingContainer heading="Stock Manager" centerHeading>
@@ -64,41 +115,48 @@ const StockManager = () => {
               <th>Quantidade</th>
             </tr>
           </thead>
-          <tbody>
-            {[1, 2, 3, 4, 5].map((key) => (
-              <tr
-                key={key + new Date().getTime()}
-                onClick={() => setSelectedRowIndex(key)}
-                className={getRowClass(key)}
-              >
-                <td>{key} Nome</td>
-                <td>R${key}00,00</td>
-                <td>Marca {key}</td>
-                <td>Categoria {key}</td>
-                <td>{key} Fornecedor</td>
-                <td>{key}</td>
-              </tr>
-            ))}
-          </tbody>
+          <tbody>{getStockRows()}</tbody>
         </table>
       </div>
 
-      <FlexContainer justifyContent="center">
-        <Button height="48px" width="50%" padding="none">
-          <FlexContainer justifyContent="center">
-            <p style={{ marginRight: 8 }}>Gerenciar produto selecionado</p>
-            <FiEdit size={16} color={colorPallet.blue.high} />
-          </FlexContainer>
-        </Button>
-      </FlexContainer>
-
-      <FlexContainer>
-        <Link to={routesPath.Home}>
-          <FlexContainer justifyContent="left">
-            <FiArrowLeft size={16} color={colorPallet.blue.high} />
-            <p style={{ marginRight: 8 }}>Voltar para home</p>
-          </FlexContainer>
-        </Link>
+      <FlexContainer justifyContent="space-between">
+        <FlexContainer maxWidth="auto" minWidth="auto">
+          <Link to={routesPath.Home}>
+            <FlexContainer
+              justifyContent="left"
+              maxWidth="auto"
+              minWidth="auto"
+            >
+              <FiArrowLeft size={16} color={colorPallet.blue.high} />
+              <p style={{ marginRight: 8 }}>Voltar para home</p>
+            </FlexContainer>
+          </Link>
+        </FlexContainer>
+        <FlexContainer justifyContent="center" flexGrow={10}>
+          <Button
+            height="48px"
+            width="50%"
+            padding="none"
+            onClick={redirecToProductsSectionWithPredefinedProductId}
+          >
+            <FlexContainer justifyContent="center" flexGrow={10}>
+              <p style={{ marginRight: 8 }}>Gerenciar produto selecionado</p>
+              <FiEdit size={16} color={colorPallet.blue.high} />
+            </FlexContainer>
+          </Button>
+        </FlexContainer>
+        <FlexContainer maxWidth="auto" minWidth="auto">
+          <a href={repositoryURL} target="_blank" rel="noopener noreferrer">
+            <FlexContainer
+              justifyContent="left"
+              maxWidth="auto"
+              minWidth="auto"
+            >
+              <p style={{ marginRight: 8 }}>Ver repositório fonte</p>
+              <FiGithub size={16} color={colorPallet.blue.high} />
+            </FlexContainer>
+          </a>
+        </FlexContainer>
       </FlexContainer>
     </HeadingContainer>
   );
