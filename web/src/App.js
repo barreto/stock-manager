@@ -1,12 +1,13 @@
 import React from "react";
 import "./global.css";
 import Routes from "./routes";
+import { PagesProvider } from "./pages/PagesContext";
 
 function App() {
   return (
-    <div>
+    <PagesProvider>
       <Routes />
-    </div>
+    </PagesProvider>
   );
 }
 

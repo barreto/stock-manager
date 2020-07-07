@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import colorPallet from "../../constants/colorPallet";
@@ -12,12 +12,14 @@ import { formatMoneyToBRL } from "../../helpers/formatter";
 import { FiEdit, FiArrowLeft, FiGithub } from "react-icons/fi";
 import * as feather from "react-icons/fi";
 import "./style.css";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
 
 const StockManager = () => {
   const unselected = -1;
   const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
 
   const history = useHistory();
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
 
   const [selectedProductId, setSelectedProductId] = useState(unselected);
   const [stockedProducts, setStockedProducts] = useState([]);
@@ -58,13 +60,15 @@ const StockManager = () => {
     );
   }
 
-  const getStockedProducts = async () => {
+  const getStockedProducts = useCallback(async () => {
+    setIsLoading(true);
     try {
       setStockedProducts(await StockService.getStock());
     } catch (error) {
       console.log("Error at getStockedProducts: ", error);
     }
-  };
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   function getStockRows() {
     if (!stockedProducts.length) return null;
@@ -92,7 +96,7 @@ const StockManager = () => {
 
   useEffect(() => {
     getStockedProducts();
-  }, []);
+  }, [getStockedProducts]);
 
   return (
     <HeadingContainer heading="Stock Manager" centerHeading>

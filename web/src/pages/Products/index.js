@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import HeadingContainer from "../../components/HeadingContainer";
@@ -16,12 +16,16 @@ import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notValidIdMessage } from "../../constants/notValidIdMessage";
 import StockService from "../../services/StockService";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
 
 const Products = ({ location }) => {
   const minPriceValue = "0,00";
   const unselected = -1;
+
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
+
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
 
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -121,6 +125,7 @@ const Products = ({ location }) => {
     };
   }
   const setFormData = (product) => {
+    setIsLoading(true);
     setName(product.name);
     setDescription(product.description);
     setAmount(product.amount);
@@ -128,12 +133,15 @@ const Products = ({ location }) => {
     setSelectedBrandId(product.brandId);
     setSelectedCategoryId(product.categoryId);
     setSelectedProviderId(product.providerId);
+    setIsLoading(false);
   };
 
   async function handleAdd() {
+    setIsLoading(true);
     const newProduct = getFormData();
     if (!checkIfIsValidProduct(newProduct)) {
       alert(notAllDataErrorMessage);
+      setIsLoading(false);
       return;
     }
     try {
@@ -144,6 +152,7 @@ const Products = ({ location }) => {
       alert("Erro ao cadastrar produto. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
 
   function handleSearch() {
@@ -155,9 +164,11 @@ const Products = ({ location }) => {
   }
 
   async function handleEdit() {
+    setIsLoading(true);
     const productToEdit = getFormData();
     if (!checkIfIsValidProduct(productToEdit)) {
       alert(notAllDataErrorMessage);
+      setIsLoading(false);
       return;
     }
     try {
@@ -167,6 +178,7 @@ const Products = ({ location }) => {
     } catch (error) {
       console.log("Error at handleEdit: ", error);
     }
+    setIsLoading(false);
   }
   async function handleDelete() {
     const productToDelete = getFormData();
@@ -179,7 +191,7 @@ const Products = ({ location }) => {
     const deleteConfirmation = window.confirm(
       `Você realmente deseja deletar os dados referentes ao produto: ${name}`
     );
-
+    setIsLoading(true);
     if (deleteConfirmation) {
       try {
         await ProductsService.deleteProduct(id);
@@ -190,6 +202,7 @@ const Products = ({ location }) => {
         console.log("Error!", error);
       }
     }
+    setIsLoading(false);
   }
 
   function handleClear() {
@@ -228,22 +241,25 @@ const Products = ({ location }) => {
   };
 
   async function findProduct(id) {
+    setIsLoading(true);
     const isValidId = Boolean(id) === true && id > 0;
     if (!isValidId) {
       alert(notValidIdMessage);
       handleClear();
+      setIsLoading(false);
+
       return;
     }
-
     const response = await StockService.getProductFromStock(id);
     const isValidProduct = checkIfIsValidProduct(response);
     if (!isValidProduct) {
       alert("Esse produto não foi encontrada.");
       handleClear();
+      setIsLoading(false);
       return;
     }
-
     setFormData(response);
+    setIsLoading(false);
   }
 
   const handleIdKeyUp = (event) => {
@@ -283,10 +299,12 @@ const Products = ({ location }) => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     getAvailableCategories();
     getAvailableBrands();
     getAvailableProviders();
-  }, []);
+    setIsLoading(false);
+  }, [setIsLoading]);
 
   useEffect(() => {
     const hasProductId = location.state && location.state.productId;
