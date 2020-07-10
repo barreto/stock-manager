@@ -17,6 +17,7 @@ public class StockController {
     @Autowired
     private StockRepository stockRepository;
 
+    @CrossOrigin
     @PutMapping("/changeAmount/{productId}")
     public ResponseEntity<?> changeStockItem(@PathVariable Long productId, @RequestBody @Valid StockChangeProductItemRequestDTO stockChangeProductItemRequestDTO) {
         var hasProductStock = stockRepository.findByProductId(productId);
@@ -31,6 +32,7 @@ public class StockController {
         return ResponseEntity.ok().build();
     }
 
+    @CrossOrigin
     @GetMapping("/{productId}")
     public ResponseEntity<StockProductResponseDTO> show(@PathVariable Long productId) {
         var stock = stockRepository.findByProductId(productId);
@@ -41,6 +43,7 @@ public class StockController {
         return ResponseEntity.ok(StockProductResponseDTO.parse(stock.get()));
     }
 
+    @CrossOrigin
     @GetMapping
     public List<StockProductResponseDTO> index() {
         var stock = stockRepository.findAll();

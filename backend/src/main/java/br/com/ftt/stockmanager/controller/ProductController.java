@@ -34,6 +34,7 @@ public class ProductController {
     @Autowired
     private StockRepository stockRepository;
 
+    @CrossOrigin
     @GetMapping
     public List<ProductResponseDTO> index() {
         var product = productRepository.findAll();
@@ -44,6 +45,7 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<ProductDetailsResponseDTO> show(@PathVariable Long id) {
         var product = productRepository.findById(id);
@@ -54,6 +56,7 @@ public class ProductController {
         return ResponseEntity.ok(ProductDetailsResponseDTO.parse(product.get()));
     }
 
+    @CrossOrigin
     @PostMapping
     @Transactional
     public ResponseEntity<ProductDetailsResponseDTO> store(@RequestBody @Valid ProductRequestDTO productToInsert, UriComponentsBuilder uriComponentsBuilder) {
@@ -98,8 +101,9 @@ public class ProductController {
         return ResponseEntity.created(uri).body(ProductDetailsResponseDTO.parse(product));
     }
 
-    @PutMapping("/{id}")
+    @CrossOrigin
     @Transactional
+    @PutMapping("/{id}")
     public ResponseEntity<ProductDetailsResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProductRequestDTO productToUpdate) {
         var hasProduct = productRepository.findById(id);
         if(hasProduct.isEmpty()){
@@ -136,8 +140,9 @@ public class ProductController {
         return ResponseEntity.ok(ProductDetailsResponseDTO.parse(product));
     }
 
-    @DeleteMapping("/{id}")
+    @CrossOrigin
     @Transactional
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable Long id) {
         var hasProduct = productRepository.findById(id);
         if(!hasProduct.isPresent()) {

@@ -3,19 +3,22 @@
 
 <h2 align="center">
   Stock Manager
-  <br>
-  (Application)
+    <br>
+  (Backend)
 </h2>
 
 <p align="center">
-Feito para o gerenciamento de estoques.
+API feita em Java para o gerenciamento de estoques.
 </p>
 
 ---
 
 <h4 align="center">
-  <a href="#tecnologias">Frontend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#como-executar">Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#documentação">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#plugins">Plugins</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#contribuidores">Contribuidores</a>
 </h4>
@@ -31,6 +34,7 @@ Tecnologias utilizadas no projeto:
 - [Modelmapper](http://modelmapper.org/)
 - [MySQL](https://www.mysql.com/)
 - [Docker](https://www.docker.com/)
+- [Swagger](https://swagger.io/)
 
 São tecnologias de fácil acesso aos desenvolvedores que utilizamos para criar a nossa aplicação, sendo o repositório de versionamento o [Github](https://github.com/).
 
@@ -44,6 +48,18 @@ Executando a aplicação:
 
 ```sh
 docker-compose up --build
+```
+
+O processo pode demorar alguns minutos. Assim que o terminal indicar que o servidor está em execução basta acessar a [documentação](#documentação) para ver quais são os endpoints disponibilizados.
+
+### Documentação
+
+Assim que a aplicação estiver em execução você poderá acessar a nossa documentação interativa através do Swagger.
+
+A documentação estará disponível por padrão na seguinte uri:
+
+```sh
+http://localhost:8080/swagger-ui.html
 ```
 
 ### Desenvolvimento
@@ -83,7 +99,15 @@ Não precisa criar uma issue, uma boa PR que traduza a funcionalidade será bem 
 $ git checkout -b <new-branch-name>
 ```
 
-2. Desenvolva o que desejar e salve suas alteradoes.
+> _Nice to have_: se possível use uma estrutura do tipo: contribuition-type/where-Im-working
+
+> Ex1: feature/stock-responsible
+>
+> Ex2: fix/model-structure
+>
+> Ex3: refactor/stock-controller
+
+3. Desenvolva o que desejar e salve suas alteradoes.
 
 ```sh
 $ git commit -m "Type here a quick description of your feature"
@@ -96,7 +120,7 @@ $ git commit -m "Type here a quick description of your feature"
 $ git pull origin master
 ```
 
-3. Envie sua alterações e seu pull request.
+5. Envie sua alterações e seu pull request.
 
 ```sh
 $ git push

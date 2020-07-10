@@ -21,6 +21,7 @@ public class ProviderController {
     @Autowired
     private ProviderRepository providerRepository;
 
+    @CrossOrigin
     @GetMapping
     public List<ProviderResponseDTO> index() {
         var provider = providerRepository.findAll();
@@ -31,6 +32,7 @@ public class ProviderController {
                 .collect(Collectors.toList());
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<ProviderResponseDTO> show(@PathVariable Long id) {
         var provider = providerRepository.findById(id);
@@ -42,6 +44,7 @@ public class ProviderController {
     }
 
     @PostMapping
+    @CrossOrigin
     @Transactional
     public ResponseEntity<ProviderResponseDTO> store(@RequestBody @Valid ProviderRequestDTO providerToInsert, UriComponentsBuilder uriComponentsBuilder) {
         var provider = new Provider();
@@ -59,6 +62,7 @@ public class ProviderController {
         return ResponseEntity.created(uri).body(ProviderResponseDTO.parse(provider));
     }
 
+    @CrossOrigin
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<ProviderResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ProviderRequestDTO providerToUpdate) {
@@ -78,6 +82,7 @@ public class ProviderController {
         return ResponseEntity.ok(ProviderResponseDTO.parse(provider));
     }
 
+    @CrossOrigin
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<?> destroy(@PathVariable Long id) {

@@ -1,15 +1,30 @@
 import React from "react";
 import CustomHeading, { CustomContainer } from "./style";
-import colorPallet from "../../contants/colorPallet";
+import colorPallet from "../../constants/colorPallet";
 
-const Container = ({ heading, centerHeading, children }) => {
+const HeadingContainer = ({
+  heading,
+  centerHeading,
+  minWidth,
+  maxWidth,
+  margin = "4vh auto 0",
+  children,
+}) => {
   return (
-    // <CustomContainer maxSize={maxSize} minSize={minSize} padding={padding}>
-    <CustomContainer padding="none" borderRadius="10px" margin="48px auto 0">
+    <CustomContainer
+      padding="none"
+      borderRadius="10px"
+      margin={margin}
+      minWidth={minWidth}
+      maxWidth={maxWidth}
+    >
       {heading && (
         <CustomContainer
           padding="none"
           margin="none"
+          border="none"
+          minWidth={minWidth}
+          maxWidth={maxWidth}
           borderRadius="10px 10px 0px 0px"
           centerHeading={centerHeading}
           backgroundColor={colorPallet.blue.high}
@@ -17,11 +32,16 @@ const Container = ({ heading, centerHeading, children }) => {
           <CustomHeading>{heading}</CustomHeading>
         </CustomContainer>
       )}
-      <CustomContainer borderRadius="0px 0px 10px 10px">
+      <CustomContainer
+        border="none"
+        minWidth={minWidth}
+        maxWidth={maxWidth}
+        borderRadius="0px 0px 10px 10px"
+      >
         {children}
       </CustomContainer>
     </CustomContainer>
   );
 };
 
-export default Container;
+export default HeadingContainer;
