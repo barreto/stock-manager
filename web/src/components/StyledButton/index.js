@@ -1,7 +1,7 @@
 import React from "react";
 import CustomButton from "./style";
 
-const Button = ({ height, width, padding, onClick, children }) => {
+const StyledButton = ({ height, width, padding, onClick, children }) => {
   return (
     <CustomButton
       padding={padding}
@@ -14,4 +14,4 @@ const Button = ({ height, width, padding, onClick, children }) => {
   );
 };
 
-export default Button;
+export default StyledButton;
