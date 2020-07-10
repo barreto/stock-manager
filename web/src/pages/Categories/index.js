@@ -7,7 +7,7 @@ import colorPallet from "../../constants/colorPallet";
 import { FiArrowLeft } from "react-icons/fi";
 import IconButton from "../../components/IconButton/icon";
 import { useState } from "react";
-const Brands = () => {
+const Categories = () => {
   // eslint-disable-next-line no-unused-vars
   const handleFormSubmit = () => {
     alert("Yeeeah!");
@@ -42,27 +42,27 @@ const Brands = () => {
   ];
 
   return (
-    <HeadingContainer heading="Marcas" maxWidth="500px">
+    <HeadingContainer heading="Categorias" maxWidth="500px">
       <form action="handleFormSubmit">
         <FlexContainer direction="column" alignItems="left">
-          <label htmlFor="brand-id">
+          <label htmlFor="category-id">
             Id {!disableIdField && "(caso for pesquisar pressione Enter)"}
           </label>
           <input
             ref={inputIdField}
-            id="brand-id"
+            id="category-id"
             type="number"
             min={0}
             disabled={disableIdField}
           />
         </FlexContainer>
         <FlexContainer direction="column" alignItems="left">
-          <label htmlFor="brand-name">Nome</label>
-          <input id="brand-name" type="text" />
+          <label htmlFor="category-name">Nome</label>
+          <input id="category-name" type="text" />
         </FlexContainer>
         <FlexContainer direction="column" alignItems="left">
-          <label htmlFor="brand-description">Descrição</label>
-          <textarea id="brand-description" type="text" />
+          <label htmlFor="category-description">Descrição</label>
+          <textarea id="category-description" type="text" />
         </FlexContainer>
       </form>
 
@@ -91,4 +91,4 @@ const Brands = () => {
   );
 };
 
-export default Brands;
+export default Categories;

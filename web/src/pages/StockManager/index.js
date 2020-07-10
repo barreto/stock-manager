@@ -14,10 +14,10 @@ const StockManager = () => {
   const unselected = -1;
   const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
   const stockManagerOptions = [
-    { text: "Produtos", iconName: "FiPackage", path: routesPath.Home },
+    { text: "Produtos", iconName: "FiPackage", path: routesPath.Products },
     { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
-    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Home },
-    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Home },
+    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Categories },
+    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Providers },
   ];
   const [selectedRowIndex, setSelectedRowIndex] = useState(unselected);
 
