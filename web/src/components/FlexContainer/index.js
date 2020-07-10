@@ -9,6 +9,7 @@ const FlexContainer = ({
   maxWidth,
   borderRadius,
   flexGrow,
+  color,
   border = "none",
   margin = "none",
   padding = "none",
@@ -28,6 +29,7 @@ const FlexContainer = ({
       margin={margin}
       flexGrow={flexGrow}
       backgroundColor={backgroundColor}
+      color={color}
     >
       {children}
     </CustomFlexContainer>

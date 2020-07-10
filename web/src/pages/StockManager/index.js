@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import colorPallet from "../../constants/colorPallet";
 import HeadingContainer from "../../components/HeadingContainer";
-import Button from "../../components/Button";
+import StyledButton from "../../components/StyledButton";
 import FlexContainer from "../../components/FlexContainer";
 import { repositoryURL } from "../../constants/repositoryURL";
 import { useEffect } from "react";
@@ -45,7 +45,7 @@ const StockManager = () => {
   function getLabelButton(text, iconName, path, key, direction = "column") {
     return (
       <Link to={path} key={key}>
-        <Button>
+        <StyledButton>
           <FlexContainer
             border="none"
             minWidth="100%"
@@ -55,7 +55,7 @@ const StockManager = () => {
             {feather[iconName](defaultButtonsConfig)}
             <p>{text}</p>
           </FlexContainer>
-        </Button>
+        </StyledButton>
       </Link>
     );
   }
@@ -137,7 +137,7 @@ const StockManager = () => {
           </Link>
         </FlexContainer>
         <FlexContainer justifyContent="center" flexGrow={10}>
-          <Button
+          <StyledButton
             height="48px"
             width="50%"
             padding="none"
@@ -147,7 +147,7 @@ const StockManager = () => {
               <p style={{ marginRight: 8 }}>Gerenciar produto selecionado</p>
               <FiEdit size={16} color={colorPallet.blue.high} />
             </FlexContainer>
-          </Button>
+          </StyledButton>
         </FlexContainer>
         <FlexContainer maxWidth="auto" minWidth="auto">
           <a href={repositoryURL} target="_blank" rel="noopener noreferrer">

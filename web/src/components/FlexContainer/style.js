@@ -11,6 +11,7 @@ const defaultJustifyContent = "space-between";
 const defaultDirection = "row";
 const defaultFlexGrow = "none";
 const defaultBackground = "#fff";
+const defaultColor = "#333";
 
 function defineWidth(flexGrow, received, defaultSize) {
   const hasFlexGrow = Boolean(flexGrow);
@@ -30,6 +31,7 @@ const CustomFlexContainer = styled.div`
   border-radius: ${(props) => props.borderRadius || defaultBorderRadius};
   padding: ${(props) => props.padding || defaultPadding};
   margin: ${(props) => props.margin || defaultMargin};
+  color: ${(props) => props.color || defaultColor};
   background: ${(props) => props.backgroundColor || defaultBackground};
   min-width: ${(props) =>
     defineWidth(props.flexGrow, props.minWidth, defaultMinWidth)};

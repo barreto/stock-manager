@@ -7,6 +7,7 @@ const HeadingContainer = ({
   centerHeading,
   minWidth,
   maxWidth,
+  headingLevel = 1,
   margin = "4vh auto 0",
   children,
 }) => {
@@ -29,7 +30,7 @@ const HeadingContainer = ({
           centerHeading={centerHeading}
           backgroundColor={colorPallet.blue.high}
         >
-          <CustomHeading>{heading}</CustomHeading>
+          <CustomHeading as={`h${headingLevel}`}>{heading}</CustomHeading>
         </CustomContainer>
       )}
       <CustomContainer

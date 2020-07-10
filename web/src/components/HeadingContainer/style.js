@@ -9,7 +9,7 @@ const defaultBorderRadius = "10px";
 const defaultMargin = "8px";
 const defaultTextAlign = "left";
 
-const CustomHeading = styled.h1`
+const CustomHeading = styled.div`
   margin: 0px;
   color: #fff;
   letter-spacing: 4px;
