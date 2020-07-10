@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import HeadingContainer from "../../components/HeadingContainer";
@@ -13,6 +13,7 @@ import longMaxValue from "../../constants/longMaxValue";
 import ProvidersService from "../../services/ProvidersService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
 
 const Providers = () => {
   const maskCNPJ = "00.000.000/0000-00";
@@ -20,8 +21,10 @@ const Providers = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
   const inputCNPJ = useRef(null);
-  const [disableIdField, setDisableIdField] = useState(true);
 
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
+
+  const [disableIdField, setDisableIdField] = useState(true);
   const [availableUFs, setAvailableUFs] = useState([]);
   const [availableCites, setAvailableCities] = useState([]);
 
@@ -48,6 +51,7 @@ const Providers = () => {
     setAvailableUFs(await IBGEApi.getUFs());
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getAvailableCities = async (uf) => {
     setAvailableCities(await IBGEApi.getCities(uf));
   };
@@ -58,9 +62,11 @@ const Providers = () => {
 
   useEffect(() => {
     if (!!selectedUF) {
+      setIsLoading(true);
       getAvailableCities(selectedUF);
+      setIsLoading(false);
     }
-  }, [selectedUF]);
+  }, [getAvailableCities, selectedUF, setIsLoading]);
 
   const handleId = (event) => {
     const value = event.target.value;
@@ -101,6 +107,7 @@ const Providers = () => {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await ProvidersService.newProvider(newProvider);
       alert("Fornecedor cadastrado com sucesso!");
@@ -109,6 +116,7 @@ const Providers = () => {
       alert("Erro ao cadastrar fornecedor. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
 
   function handleSearch() {
@@ -124,6 +132,7 @@ const Providers = () => {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await ProvidersService.updatePovider(id, newProvider);
       alert("Fornecedor atualizado com sucesso!");
@@ -131,6 +140,7 @@ const Providers = () => {
       alert("Erro ao atualizar fornecedor. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
   async function handleDelete() {
     const newProvider = getFormData();
@@ -144,6 +154,7 @@ const Providers = () => {
       `Você realmente deseja deletar os dados referentes ao fornecedor: ${name}`
     );
 
+    setIsLoading(true);
     if (deleteConfirmation) {
       try {
         await ProvidersService.deleteProvider(id);
@@ -154,6 +165,7 @@ const Providers = () => {
         console.log("Error!", error);
       }
     }
+    setIsLoading(false);
   }
 
   function handleClear() {
@@ -212,6 +224,7 @@ const Providers = () => {
   };
 
   async function findProvider(id) {
+    setIsLoading(true);
     const response = await ProvidersService.getProvider(id);
     const isValidProvider = checkIfIsValidProvider(response);
     if (!isValidProvider) {
@@ -219,9 +232,9 @@ const Providers = () => {
       handleClear();
       return;
     }
-
     const mappedProvider = createMappedProvider(response);
     setFormData(mappedProvider);
+    setIsLoading(false);
   }
 
   const handleIdKeyUp = (event) => {
