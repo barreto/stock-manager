@@ -17,6 +17,7 @@ import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notValidIdMessage } from "../../constants/notValidIdMessage";
 import StockService from "../../services/StockService";
 import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 
 const Products = ({ location }) => {
   const minPriceValue = "0,00";
@@ -138,7 +139,7 @@ const Products = ({ location }) => {
 
   async function handleAdd() {
     setIsLoading(true);
-    const newProduct = getFormData();
+    const newProduct = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidProduct(newProduct)) {
       alert(notAllDataErrorMessage);
       setIsLoading(false);
@@ -165,7 +166,7 @@ const Products = ({ location }) => {
 
   async function handleEdit() {
     setIsLoading(true);
-    const productToEdit = getFormData();
+    const productToEdit = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidProduct(productToEdit)) {
       alert(notAllDataErrorMessage);
       setIsLoading(false);
