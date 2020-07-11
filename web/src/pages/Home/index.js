@@ -20,6 +20,7 @@ import StyledButton from "../../components/StyledButton";
 import { Link } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import { useState } from "react";
+import { repositoryURL } from "../../constants/repositoryURL";
 
 const Home = () => {
   const simpleAndEasySection = useRef(null);
@@ -232,10 +233,7 @@ const Home = () => {
                   coisa para que o projeto se adeque melhor ao seu negócio basta
                   ir para o repositório e customizar como quiser.
                 </p>
-                <a
-                  target="_blank "
-                  href="https://github.com/barreto/stock-manager"
-                >
+                <a target="_blank " href={repositoryURL}>
                   <StyledButton href>
                     <FiGithub size={56} />
                   </StyledButton>
