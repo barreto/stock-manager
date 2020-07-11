@@ -13,6 +13,7 @@ import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { useContext } from "react";
 import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 const Brands = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
@@ -45,7 +46,7 @@ const Brands = () => {
   };
 
   async function handleAdd() {
-    const newBrand = getFormData();
+    const newBrand = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidBrand(newBrand)) {
       alert(notAllDataErrorMessage);
       return;
@@ -70,7 +71,7 @@ const Brands = () => {
   }
 
   async function handleEdit() {
-    const brandToEdit = getFormData();
+    const brandToEdit = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidBrand(brandToEdit)) {
       alert(notAllDataErrorMessage);
       return;

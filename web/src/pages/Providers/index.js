@@ -14,6 +14,7 @@ import ProvidersService from "../../services/ProvidersService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 
 const Providers = () => {
   const maskCNPJ = "00.000.000/0000-00";
@@ -102,7 +103,7 @@ const Providers = () => {
   }
 
   async function handleAdd() {
-    const newProvider = getFormData();
+    const newProvider = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidProvider(newProvider)) {
       alert(notAllDataErrorMessage);
       return;
@@ -127,7 +128,7 @@ const Providers = () => {
   }
 
   async function handleEdit() {
-    const newProvider = getFormData();
+    const newProvider = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidProvider(newProvider)) {
       alert(notAllDataErrorMessage);
       return;
@@ -178,6 +179,7 @@ const Providers = () => {
     setNeighbourhood("");
     setAddress("");
     setFocusOnNameField();
+    setIsLoading(false);
   }
 
   const handleCNPJ = (event) => {

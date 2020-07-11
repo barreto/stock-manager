@@ -12,6 +12,7 @@ import CategoriesService from "../../services/CategoriesService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 const Categories = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
@@ -44,7 +45,7 @@ const Categories = () => {
   };
 
   async function handleAdd() {
-    const newCategory = getFormData();
+    const newCategory = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidCategory(newCategory)) {
       alert(notAllDataErrorMessage);
       return;
@@ -69,7 +70,7 @@ const Categories = () => {
   }
 
   async function handleEdit() {
-    const categoryToEdit = getFormData();
+    const categoryToEdit = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidCategory(categoryToEdit)) {
       alert(notAllDataErrorMessage);
       return;
