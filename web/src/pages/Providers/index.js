@@ -178,6 +178,7 @@ const Providers = () => {
     setNeighbourhood("");
     setAddress("");
     setFocusOnNameField();
+    setIsLoading(false);
   }
 
   const handleCNPJ = (event) => {
