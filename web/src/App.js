@@ -1,12 +1,16 @@
 import React from "react";
 import "./global.css";
 import Routes from "./routes";
+import { PagesProvider } from "./pages/PagesContext";
+import logStockManagerInConsole from "./helpers/logStockManagerInConsole";
 
 function App() {
+  logStockManagerInConsole();
+
   return (
-    <div>
+    <PagesProvider>
       <Routes />
-    </div>
+    </PagesProvider>
   );
 }
 

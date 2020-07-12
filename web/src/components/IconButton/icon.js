@@ -2,7 +2,7 @@ import React from "react";
 import * as feather from "react-icons/fi";
 import colorPallet from "../../constants/colorPallet";
 import FlexContainer from "../FlexContainer";
-import Button from "../Button";
+import StyledButton from "../StyledButton";
 
 const IconButton = ({
   height,
@@ -18,7 +18,12 @@ const IconButton = ({
   const defaultButtonsConfig = { size, color };
 
   return (
-    <Button width={width} height={height} padding={padding} onClick={onClick}>
+    <StyledButton
+      width={width}
+      height={height}
+      padding={padding}
+      onClick={onClick}
+    >
       <FlexContainer
         border="none"
         backgroundColor="transparent"
@@ -29,7 +34,7 @@ const IconButton = ({
         {feather[iconName](defaultButtonsConfig)}
         {children}
       </FlexContainer>
-    </Button>
+    </StyledButton>
   );
 };
 

@@ -11,9 +11,14 @@ import longMaxValue from "../../constants/longMaxValue";
 import BrandsService from "../../services/BrandsService";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
+import { useContext } from "react";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 const Brands = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
+
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
 
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -41,11 +46,12 @@ const Brands = () => {
   };
 
   async function handleAdd() {
-    const newBrand = getFormData();
+    const newBrand = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidBrand(newBrand)) {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await BrandsService.newBrand(newBrand);
       alert("Marca cadastrada com sucesso!");
@@ -54,6 +60,7 @@ const Brands = () => {
       alert("Erro ao cadastrar marca. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
 
   function handleSearch() {
@@ -64,11 +71,12 @@ const Brands = () => {
   }
 
   async function handleEdit() {
-    const brandToEdit = getFormData();
+    const brandToEdit = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidBrand(brandToEdit)) {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await BrandsService.updateBrand(id, brandToEdit);
       alert("Marca atualizado com sucesso!");
@@ -76,6 +84,7 @@ const Brands = () => {
       alert("Erro ao atualizar marca. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
   async function handleDelete() {
     const brandToDelete = getFormData();
@@ -88,7 +97,7 @@ const Brands = () => {
     const deleteConfirmation = window.confirm(
       `Você realmente deseja deletar os dados referentes à marca: ${name}`
     );
-
+    setIsLoading(true);
     if (deleteConfirmation) {
       try {
         await BrandsService.deleteBrand(id);
@@ -99,6 +108,7 @@ const Brands = () => {
         console.log("Error!", error);
       }
     }
+    setIsLoading(false);
   }
 
   function handleClear() {

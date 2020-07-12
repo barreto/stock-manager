@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import HeadingContainer from "../../components/HeadingContainer";
@@ -11,6 +11,8 @@ import longMaxValue from "../../constants/longMaxValue";
 import CategoriesService from "../../services/CategoriesService";
 import ExtraIdInfo from "../../components/ExtraIdInfo";
 import { notAllDataErrorMessage } from "../../constants/notAllDataErrorMessage";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
+import notTwicedWhitespacesAllAttrs from "../../helpers/notTwicedWhitespacesAllAttrs";
 const Categories = () => {
   const inputIdField = useRef(null);
   const inputNameField = useRef(null);
@@ -19,6 +21,8 @@ const Categories = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [disableIdField, setDisableIdField] = useState(true);
+
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
 
   const handleId = (event) => setId(event.target.value);
   const handleName = (event) => setName(event.target.value);
@@ -41,11 +45,12 @@ const Categories = () => {
   };
 
   async function handleAdd() {
-    const newCategory = getFormData();
+    const newCategory = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidCategory(newCategory)) {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await CategoriesService.newCategory(newCategory);
       alert("Categoria cadastrado com sucesso!");
@@ -54,6 +59,7 @@ const Categories = () => {
       alert("Erro ao cadastrar categoria. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
 
   function handleSearch() {
@@ -64,11 +70,12 @@ const Categories = () => {
   }
 
   async function handleEdit() {
-    const categoryToEdit = getFormData();
+    const categoryToEdit = notTwicedWhitespacesAllAttrs(getFormData());
     if (!checkIfIsValidCategory(categoryToEdit)) {
       alert(notAllDataErrorMessage);
       return;
     }
+    setIsLoading(true);
     try {
       await CategoriesService.updateCategory(id, categoryToEdit);
       alert("Categoria atualizado com sucesso!");
@@ -76,6 +83,7 @@ const Categories = () => {
       alert("Erro ao atualizar categoria. Tente novamente mais tarde!");
       console.log("Error!", error);
     }
+    setIsLoading(false);
   }
   async function handleDelete() {
     const categoryToDelete = getFormData();
@@ -88,7 +96,7 @@ const Categories = () => {
     const deleteConfirmation = window.confirm(
       `Você realmente deseja deletar os dados referentes à categoria: ${name}`
     );
-
+    setIsLoading(true);
     if (deleteConfirmation) {
       try {
         await CategoriesService.deleteCategory(id);
@@ -99,6 +107,7 @@ const Categories = () => {
         console.log("Error!", error);
       }
     }
+    setIsLoading(false);
   }
 
   function handleClear() {
@@ -122,15 +131,17 @@ const Categories = () => {
   };
 
   async function findCategory(id) {
+    setIsLoading(true);
     const response = await CategoriesService.getCategory(id);
     const isValidCategory = checkIfIsValidCategory(response);
     if (!isValidCategory) {
       alert("Essa categoria não foi encontrada.");
       handleClear();
+      setIsLoading(false);
       return;
     }
-
     setFormData(response);
+    setIsLoading(false);
   }
 
   const handleIdKeyUp = (event) => {

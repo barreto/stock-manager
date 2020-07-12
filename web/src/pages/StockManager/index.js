@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import routesPath from "../../constants/routesPath";
 import colorPallet from "../../constants/colorPallet";
 import HeadingContainer from "../../components/HeadingContainer";
-import Button from "../../components/Button";
+import StyledButton from "../../components/StyledButton";
 import FlexContainer from "../../components/FlexContainer";
 import { repositoryURL } from "../../constants/repositoryURL";
 import { useEffect } from "react";
 import StockService from "../../services/StockService";
 import { formatMoneyToBRL } from "../../helpers/formatter";
-import { FiEdit, FiArrowLeft, FiGithub } from "react-icons/fi";
+import { FiEdit, FiArrowLeft, FiGithub, FiLock } from "react-icons/fi";
 import * as feather from "react-icons/fi";
 import "./style.css";
+import PagesContext, { setIsLoadingIndex } from "../PagesContext";
 
 const StockManager = () => {
   const unselected = -1;
-  const defaultButtonsConfig = { size: 48, color: colorPallet.blue.high };
+  const defaultBigButtonsConfig = { size: 48, color: colorPallet.blue.high };
+  const defaultSmallButtonsConfig = { size: 24, color: colorPallet.blue.high };
 
   const history = useHistory();
+  const setIsLoading = useContext(PagesContext)[setIsLoadingIndex];
 
+  const [isLocked, setIsLocked] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(unselected);
   const [stockedProducts, setStockedProducts] = useState([]);
 
@@ -30,10 +34,26 @@ const StockManager = () => {
   };
 
   const stockManagerOptions = [
-    { text: "Produtos", iconName: "FiPackage", path: routesPath.Products },
-    { text: "Marcas", iconName: "FiTag", path: routesPath.Brands },
-    { text: "Categorias", iconName: "FiBookmark", path: routesPath.Categories },
-    { text: "Fornecedores", iconName: "FiTruck", path: routesPath.Providers },
+    {
+      text: "Produtos",
+      iconName: "FiPackage",
+      path: routesPath.Products,
+    },
+    {
+      text: "Marcas",
+      iconName: "FiTag",
+      path: routesPath.Brands,
+    },
+    {
+      text: "Categorias",
+      iconName: "FiBookmark",
+      path: routesPath.Categories,
+    },
+    {
+      text: "Fornecedores",
+      iconName: "FiTruck",
+      path: routesPath.Providers,
+    },
   ];
 
   function getRowClass(id) {
@@ -41,35 +61,50 @@ const StockManager = () => {
   }
 
   function getLabelButton(text, iconName, path, key, direction = "column") {
-    return (
+    const validatedIconName = isLocked ? "FiLock" : iconName;
+
+    const customizedButton = (
+      <StyledButton disabled={isLocked} key={key}>
+        <FlexContainer
+          border="none"
+          minWidth="100%"
+          backgroundColor="transparent"
+          direction={direction}
+        >
+          {feather[validatedIconName](defaultBigButtonsConfig)}
+          <p>{text}</p>
+        </FlexContainer>
+      </StyledButton>
+    );
+
+    return isLocked ? (
+      customizedButton
+    ) : (
       <Link to={path} key={key}>
-        <Button>
-          <FlexContainer
-            border="none"
-            minWidth="100%"
-            backgroundColor="transparent"
-            direction={direction}
-          >
-            {feather[iconName](defaultButtonsConfig)}
-            <p>{text}</p>
-          </FlexContainer>
-        </Button>
+        {customizedButton}
       </Link>
     );
   }
 
-  const getStockedProducts = async () => {
+  const getStockedProducts = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setStockedProducts(await StockService.getStock());
+      const response = await StockService.getStock();
+      if (response && response.length) {
+        setStockedProducts(response);
+      } else {
+        setIsLocked(true);
+      }
     } catch (error) {
       console.log("Error at getStockedProducts: ", error);
     }
-  };
+    setIsLoading(false);
+  }, [setIsLoading]);
 
-  function getStockRows() {
-    if (!stockedProducts.length) return null;
+  function getStockTBody() {
+    if (isLocked || !stockedProducts.length) return null;
 
-    return stockedProducts.map(({ id, product, amount }) => {
+    const tableRows = stockedProducts.map(({ id, product, amount }) => {
       const { name, category, brand, provider, price } = product;
 
       return (
@@ -88,11 +123,19 @@ const StockManager = () => {
         </tr>
       );
     });
+
+    return <tbody>{tableRows}</tbody>;
+  }
+
+  function getLockedIconOr(enabledIcon, size = 32) {
+    const iconProps = { color: "#333", size };
+    if (isLocked) return <FiLock {...iconProps} />;
+    return enabledIcon;
   }
 
   useEffect(() => {
     getStockedProducts();
-  }, []);
+  }, [getStockedProducts]);
 
   return (
     <HeadingContainer heading="Stock Manager" centerHeading>
@@ -115,8 +158,14 @@ const StockManager = () => {
               <th>Quantidade</th>
             </tr>
           </thead>
-          <tbody>{getStockRows()}</tbody>
+          {getStockTBody()}
         </table>
+        {isLocked && (
+          <div className="no-data-tbody">
+            Não há dados para serem apresentados ou houve alguma falha na
+            comunicação com o banco de dados.
+          </div>
+        )}
       </div>
 
       <FlexContainer justifyContent="space-between">
@@ -127,23 +176,24 @@ const StockManager = () => {
               maxWidth="auto"
               minWidth="auto"
             >
-              <FiArrowLeft size={16} color={colorPallet.blue.high} />
+              <FiArrowLeft {...defaultSmallButtonsConfig} />
               <p style={{ marginRight: 8 }}>Voltar para home</p>
             </FlexContainer>
           </Link>
         </FlexContainer>
         <FlexContainer justifyContent="center" flexGrow={10}>
-          <Button
+          <StyledButton
             height="48px"
             width="50%"
             padding="none"
+            disabled={isLocked}
             onClick={redirecToProductsSectionWithPredefinedProductId}
           >
             <FlexContainer justifyContent="center" flexGrow={10}>
               <p style={{ marginRight: 8 }}>Gerenciar produto selecionado</p>
-              <FiEdit size={16} color={colorPallet.blue.high} />
+              {getLockedIconOr(<FiEdit size={16} />, 16)}
             </FlexContainer>
-          </Button>
+          </StyledButton>
         </FlexContainer>
         <FlexContainer maxWidth="auto" minWidth="auto">
           <a href={repositoryURL} target="_blank" rel="noopener noreferrer">
@@ -153,7 +203,7 @@ const StockManager = () => {
               minWidth="auto"
             >
               <p style={{ marginRight: 8 }}>Ver repositório fonte</p>
-              <FiGithub size={16} color={colorPallet.blue.high} />
+              <FiGithub {...defaultSmallButtonsConfig} />
             </FlexContainer>
           </a>
         </FlexContainer>
