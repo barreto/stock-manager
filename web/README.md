@@ -7,9 +7,9 @@
   (front-end)
 </h2>
 
-<p align="center">
+<h6 align="center">
 SPA criada em React para o gerenciamento de estoques.
-</p>
+</h6>
 
 ---
 
