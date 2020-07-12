@@ -52,7 +52,7 @@ O processo pode demorar alguns minutos. Assim que o terminal indicar que o servi
 
 ### Documentação
 
-Assim que a aplicação estiver em execução você poderá acessar a nossa documentação interativa através do Swagger.
+Assim que a aplicação estiver **em execução** você poderá acessar a nossa documentação interativa através do Swagger.
 
 A documentação estará disponível por padrão na seguinte uri:
 

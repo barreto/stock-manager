@@ -16,6 +16,7 @@ SPA criada em React para o gerenciamento de estoques.
 <h4 align="center">
   <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#documentação">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#plugins">Plugins</a>
 </h4>
@@ -31,6 +32,7 @@ Tecnologias utilizadas no projeto:
 - [React Router](https://reactrouter.com/web/guides/quick-start)
 - [react-burguer-menu](https://github.com/negomi/react-burger-menu)
 - [React Icons](https://react-icons.github.io/react-icons/)
+- [Storybook](https://storybook.js.org/)
 
 São tecnologias de fácil acesso aos desenvolvedores que utilizamos para criar a nossa aplicação, sendo o repositório de versionamento o [Github](https://github.com/).
 
@@ -38,13 +40,25 @@ São tecnologias de fácil acesso aos desenvolvedores que utilizamos para criar 
 
 Depois de instalar todas as dependências de [desenvolvimento](#desenvolvimento), no diretório _/web_ você poderá usar o seguinte script:
 
-### `npm start`
+#### `npm start`
 
 Ele irá iniciar a aplicação em modo de desenvolvimento.
 
 Para ver o que está desenvolvido abra o servidor de desenvolvimento: [http://localhost:3000](http://localhost:3000).
 
-Ao editar o código o servidor irá recarregar automáticamente incluindo as novas edições.
+Ao editar o código o servidor irá recarregar automáticamente incluindo as novas alterações.
+
+### Documentação
+
+Utilizamos o Storybook para criar uma documentação interativa. Com ele podemos alterar parâmetros e ver em tempo real qual o efeito causado no componente.
+
+![Menu react-burguer-menu storybook preview](https://raw.githubusercontent.com/barreto/stock-manager/doc/documentation/assets/stockManager.gif)
+
+Para ver a documentação execute o comando a seguir:
+
+#### `npm run storybook`
+
+Após esse comando ser executado a documentação será disponibilizada por padrão em: [http://localhost:9009/](http://localhost:9009/)
 
 ### Desenvolvimento
 
