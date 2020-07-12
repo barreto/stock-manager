@@ -7,9 +7,9 @@
   (back-end)
 </h2>
 
-<p align="center">
+<h6 align="center">
 API feita em Java para o gerenciamento de estoques.
-</p>
+</h6>
 
 ---
 
