@@ -4,7 +4,7 @@
 <h2 align="center">
   Stock Manager
     <br>
-  (Backend)
+  (back-end)
 </h2>
 
 <p align="center">
@@ -18,9 +18,7 @@ API feita em Java para o gerenciamento de estoques.
   <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#documentação">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#plugins">Plugins</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#contribuidores">Contribuidores</a>
+  <a href="#plugins">Plugins</a>
 </h4>
 
 ### Tecnologias
@@ -58,9 +56,7 @@ Assim que a aplicação estiver em execução você poderá acessar a nossa docu
 
 A documentação estará disponível por padrão na seguinte uri:
 
-```sh
-http://localhost:8080/swagger-ui.html
-```
+[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ### Desenvolvimento
 
@@ -88,56 +84,14 @@ A instalação será útil apenas em tempo de desenvolvimento, pois como utiliza
 - [Maven](https://maven.apache.org/)
   - Gerênciamento de dependências
 
-### Como contribuir
-
-Não precisa criar uma issue, uma boa PR que traduza a funcionalidade será bem vinda.
-
-1. Dê um fork no projeto.
-2. Crie a sua branch.
-
-```sh
-$ git checkout -b <new-branch-name>
-```
-
-> _Nice to have_: se possível use uma estrutura do tipo: contribuition-type/where-Im-working
-
-> Ex1: feature/stock-responsible
->
-> Ex2: fix/model-structure
->
-> Ex3: refactor/stock-controller
-
-3. Desenvolva o que desejar e salve suas alteradoes.
-
-```sh
-$ git commit -m "Type here a quick description of your feature"
-```
-
-4. Atualize o projeto
-   _Esse passo é muito útil pois caso haja atualziações você poderá consertar os erros gerados_
-
-```sh
-$ git pull origin master
-```
-
-5. Envie sua alterações e seu pull request.
-
-```sh
-$ git push
-```
-
-### Contribuidores
-
-<h4 align="center">
-  <a href="https://github.com/lucaspolizeli">Lucas Polizeli</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/devbarreto">Victor Barreto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/kiqvinicius">Kaique Vinicius</a>
-</h4>
-
 <p align="center">
 <img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/factory.svg" width="400px">
 </p>
 
 ---
 
+<h6 style="text-align:center;">
+
 Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+
+</h6>

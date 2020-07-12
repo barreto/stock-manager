@@ -1,68 +1,82 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/boxes.svg" width="100px" align="right">
+<img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/boxes.svg" width="100px" align="left">
 
-## Available Scripts
+<h2 align="center">
+  Stock Manager
+    <br>
+  (front-end)
+</h2>
 
-In the project directory, you can run:
+<p align="center">
+SPA criada em React para o gerenciamento de estoques.
+</p>
+
+---
+
+<h4 align="center">
+  <a href="#tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#plugins">Plugins</a>
+</h4>
+
+### Tecnologias
+
+Tecnologias utilizadas no projeto:
+<img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/box.svg" width="100px" align="right">
+
+- [React](https://pt-br.reactjs.org/)
+- [Apisauce](https://github.com/infinitered/apisauce)
+- [Styled Components](https://styled-components.com/)
+- [React Router](https://reactrouter.com/web/guides/quick-start)
+- [react-burguer-menu](https://github.com/negomi/react-burger-menu)
+- [React Icons](https://react-icons.github.io/react-icons/)
+
+São tecnologias de fácil acesso aos desenvolvedores que utilizamos para criar a nossa aplicação, sendo o repositório de versionamento o [Github](https://github.com/).
+
+### Como executar
+
+Depois de instalar todas as dependências de [desenvolvimento](#desenvolvimento), no diretório _/web_ você poderá usar o seguinte script:
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Ele irá iniciar a aplicação em modo de desenvolvimento.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Para ver o que está desenvolvido abra o servidor de desenvolvimento: [http://localhost:3000](http://localhost:3000).
 
-### `npm test`
+Ao editar o código o servidor irá recarregar automáticamente incluindo as novas edições.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Desenvolvimento
 
-### `npm run build`
+Para installar todas as dependências de desenvolvimento basta executar o comando abaixo:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+$ npm install
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Ele irá checar tudo que há no arquivo de dependências e scripts _package.json_ e baixar se for necessário.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p align="center">
+<img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/pallet.svg" width="200px">
+</p>
 
-### `npm run eject`
+### Plugins
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- [Create React APP](https://create-react-app.dev/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - Definição da base do projeto.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [npm](https://www.npmjs.com/)
+  - Gerênciamento de dependências
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<p align="center">
+<img src="https://raw.githubusercontent.com/lucaspolizeli/stock-manager/4d2ce4a963e81b1954da85f71021024ee4d4a88b/assets/factory.svg" width="400px">
+</p>
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<h6 style="text-align:center;">
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+</h6>
