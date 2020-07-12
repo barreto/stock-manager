@@ -7,9 +7,9 @@
   (Application)
 </h2>
 
-<p align="center">
+<h6 align="center">
 Gerencie estoques de forma otimizada
-</p>
+</h6>
 
 ---
 
