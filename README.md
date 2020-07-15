@@ -20,6 +20,9 @@ Gerencie estoques de forma otimizada
   <a href="#contribuidores">Contribuidores</a>
 </h4>
 
+### Preview
+<img src="https://raw.githubusercontent.com/barreto/stock-manager/master/assets/stockManagerPreview.gif" width="100%" align="center">
+
 ### Como contribuir
 
 Não precisa criar uma issue, uma boa PR que traduza a funcionalidade será bem vinda.
